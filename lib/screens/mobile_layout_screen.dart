@@ -35,9 +35,9 @@ class MobileLayoutScreen extends StatelessWidget {
             ),
           ],
           bottom: const TabBar(
-            indicatorColor: tabColor,
+            indicatorColor: deepblue,
             indicatorWeight: 4,
-            labelColor: tabColor,
+            labelColor: deepblue,
             unselectedLabelColor: Colors.grey,
             labelStyle: TextStyle(
               fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class MobileLayoutScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, SelectContact.routeName );
           },
-          backgroundColor: tabColor,
+          backgroundColor: deepblue,
           child: const Icon(
             Icons.comment,
             color: Colors.white,

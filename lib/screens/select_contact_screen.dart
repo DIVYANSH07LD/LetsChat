@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_ui/feature/selectContact/controller/selectContactController.dart';
-import 'package:whatsapp_ui/widgets/contacts_list.dart';
-
 import '../common/widgets/errorwidget.dart';
 import '../common/widgets/loader.dart';
 
 class SelectContact extends ConsumerWidget {
   static const routeName = '/select-contact';
   const SelectContact({Key? key}) : super(key: key);
+
+  void selectContacts(WidgetRef ref,Contact contact,BuildContext context){
+  ref.read(selectContactControllerProvider).selectContact(contact, context );
+
+  }
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
@@ -23,11 +27,22 @@ class SelectContact extends ConsumerWidget {
       ),
       body: ref.watch(getContactProvider).when(
           data: (contactList)=>ListView.builder(
-              itemCount: 5,
+              itemCount: contactList.length,
               itemBuilder: (context,index){
-            // final contacts = contact[index];
+            final contacts = contactList[index];
             return ListTile(
-              // title: Text(contactList.),
+              onTap: (){
+                selectContacts(
+                  ref,contacts,context
+                );
+              },
+              title: Text(contacts.displayName.toString()),
+              leading: contacts.photo==null?null:
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.deepPurple,
+                backgroundImage: MemoryImage(contacts.photo!),
+              ),
             );
           }),
           error: (error,trace){

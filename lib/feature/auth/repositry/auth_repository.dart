@@ -87,8 +87,14 @@ class AuthRepository{
              String photoUrl = await ref.read(commonFirebaseStorageRepositoryProvider).storeFileToStorage('ProfilePic/$uid',profilePic);
 
           }
-              var user = UserModel(proficPic: photoUrl.toString(), username: name, uid: uid, isOnline: true, userPhone: auth.currentUser!.uid, groupId: []);
-
+              var user = UserModel(
+                  proficPic: photoUrl.toString(),
+                  username: name,
+                  uid: uid,
+                  isOnline: true,
+                  userPhone: auth.currentUser!.phoneNumber.toString(),
+                  groupId: []
+              );
               // firebaseFirestore.collection('users').doc(uid).set(user.toMap());
               firebaseFirestore.collection('users').doc(uid).set(user.toMap());
                   Navigator.pushNamedAndRemoveUntil(context, MobileLayoutScreen.routeName, (route) => false );
@@ -96,5 +102,10 @@ class AuthRepository{
           catch(e){
             showSnackBar(context: context, content: e.toString());
           }
+        }
+
+
+      Stream<UserModel> userData(String userId){
+          return firebaseFirestore.collection('users').doc(userId).snapshots().map((event) => UserModel.fromMap(event.data()!));
         }
 }

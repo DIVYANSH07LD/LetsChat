@@ -31,7 +31,7 @@ class UserModel{
           isOnline:  map['isOnline']??'',
          proficPic:   map['profilePic']??'',
           uid:  map['uid']??'',
-       username:     map['username']??'',
+       username:     map['name']??'',
          userPhone:   map['userPhone']??'',
         );
   }
